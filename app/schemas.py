@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, conint
 from typing import Optional
 from datetime import datetime
 
@@ -27,7 +27,7 @@ class BookBase(BaseModel):
     author: str
     year: Optional[int] = None
     isbn: Optional[str] = None
-    quantity: int = 1
+    quantity: conint(ge=0) = 1
 
 
 class BookCreate(BookBase):
@@ -40,7 +40,13 @@ class BookRead(BookBase):
     class Config:
         orm_mode = True
 
+class BookUpdate(BaseModel):
+    title: Optional[str]
+    author: Optional[str]
+    description: Optional[str]
 
+    class Config:
+        from_attributes = True  # если используешь Pydantic v2, вместо orm_mode
 # ----------- Reader ----------- #
 
 class ReaderBase(BaseModel):
