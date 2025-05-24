@@ -1,11 +1,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv, find_dotenv
+import os
+
+# Загрузка переменных окружения из .env
+load_dotenv(find_dotenv())
 
 
-SQLALCHEMY_DATABASE_URL = "postgresql://library_user:yourpassword@localhost/library_db"
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+engine = create_engine(os.getenv("DATABASE_URL"), echo=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -17,3 +20,4 @@ def get_db():
         yield db
     finally:
         db.close()
+
