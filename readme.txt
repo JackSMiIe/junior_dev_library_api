@@ -12,27 +12,29 @@ RESTful API для управления библиотекой книг с ау�
 
 ### Установка и запуск
 
-```bash
-# 1. Клонирование репозитория
-git clone https://github.com/JackSMiIe/junior_dev_library_api.git
-cd junior_dev_library_api
+<pre>
+1. Клонирование репозитория
+   git clone https://github.com/JackSMiIe/junior_dev_library_api.git
+   cd junior_dev_library_api
 
-# 2. Создание виртуального окружения
-python3 -m venv .venv
-source .venv/bin/activate  # Linux/Mac
-# .venv\Scripts\activate  # Windows
+2. Создание виртуального окружения
+   python3 -m venv .venv
+   source .venv/bin/activate  # Linux/Mac
+   .venv\Scripts\activate     # Windows
 
-# 3. Установка зависимостей
-pip install -r requirements.txt
+3. Установка зависимостей
+   pip install -r requirements.txt
 
-# 4. Настройка базы данных (создайте файл .env)
-echo "DATABASE_URL=postgresql://user:password@localhost:5432/library_db" > .env
-echo "SECRET_KEY=your-secret-key-here" >> .env
-echo "ALGORITHM=HS256" >> .env
-echo "ACCESS_TOKEN_EXPIRE_MINUTES=30" >> .env
+4. Настройка базы данных (создайте файл .env с переменными окружения)
+   DATABASE_URL=postgresql://user:password@localhost:5432/library_db
+   SECRET_KEY=your-secret-key-here
+   ALGORITHM=HS256
+   ACCESS_TOKEN_EXPIRE_MINUTES=30
 
-# 5. Применение миграций
-alembic upgrade head
+5. Применение миграций
+   alembic upgrade head
 
-# 6. Запуск сервера
-uvicorn app.main:app --reload
+6. Запуск сервера
+   uvicorn app.main:app --reload
+</pre>
+
