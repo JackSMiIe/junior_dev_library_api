@@ -7,7 +7,6 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Library API")
 
-# Если нужна CORS — например, для фронтенда, можно раскомментировать
 # app.add_middleware(
 #     CORSMiddleware,
 #     allow_origins=["*"],
