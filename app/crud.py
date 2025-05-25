@@ -24,3 +24,17 @@ def delete_book(db: Session, book_id: int):
         db.delete(book)
         db.commit()
     return book
+
+def update_book(db: Session, book_id: int, book_update: schemas.BookUpdate):
+    db_book = db.query(models.Book).filter(models.Book.id == book_id).first()
+    if not db_book:
+        return None
+    update_data = book_update.dict(exclude_unset=True)
+    # Проверим, если в update_data есть quantity, что оно не < 0 (защита на уровне crud)
+    if 'quantity' in update_data and update_data['quantity'] < 0:
+        raise ValueError("Quantity cannot be less than zero")
+    for key, value in update_data.items():
+        setattr(db_book, key, value)
+    db.commit()
+    db.refresh(db_book)
+    return db_book
