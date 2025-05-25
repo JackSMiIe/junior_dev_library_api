@@ -3,7 +3,7 @@ from app import models, schemas
 
 # Создать новую книгу
 def create_book(db: Session, book: schemas.BookCreate):
-    db_book = models.Book(**book.dict())
+    db_book = models.Book(**book.model_dump())  #
     db.add(db_book)
     db.commit()
     db.refresh(db_book)
@@ -29,8 +29,7 @@ def update_book(db: Session, book_id: int, book_update: schemas.BookUpdate):
     db_book = db.query(models.Book).filter(models.Book.id == book_id).first()
     if not db_book:
         return None
-    update_data = book_update.dict(exclude_unset=True)
-    # Проверим, если в update_data есть quantity, что оно не < 0 (защита на уровне crud)
+    update_data = book_update.model_dump(exclude_unset=True)  #
     if 'quantity' in update_data and update_data['quantity'] < 0:
         raise ValueError("Quantity cannot be less than zero")
     for key, value in update_data.items():
@@ -38,3 +37,7 @@ def update_book(db: Session, book_id: int, book_update: schemas.BookUpdate):
     db.commit()
     db.refresh(db_book)
     return db_book
+
+# Получить книгу по ISBN
+def get_book_by_isbn(db: Session, isbn: str):
+    return db.query(models.Book).filter(models.Book.isbn == isbn).first()

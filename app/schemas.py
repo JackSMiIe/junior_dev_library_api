@@ -32,11 +32,12 @@ class BookRead(BookBase):
     model_config = ConfigDict(from_attributes=True)
 
 class BookUpdate(BaseModel):
-    title: Optional[str]
-    author: Optional[str]
-    description: Optional[str]
-    quantity: Optional[int]
-    model_config = ConfigDict(from_attributes=True)
+    title: Optional[str] = None
+    author: Optional[str] = None
+    year: Optional[int] = None
+    isbn: Optional[str] = None
+    quantity: Optional[int] = None
+    description: Optional[str] = None
 
 
 # ----------- Reader ----------- #
